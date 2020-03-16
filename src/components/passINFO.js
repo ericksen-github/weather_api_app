@@ -1,6 +1,7 @@
 import { selectedTemp, changeDegree } from "./degreeChange";
 
 const passINFO = info => {
+  // takes value from info object and passes them to display
   document.getElementById("currentTemp").innerHTML = info.currentTemp + "° C";
   document.getElementById("weatherStatus").innerHTML = info.weatherDescription;
   document.getElementById("dayDiv").innerHTML = info.day;
@@ -11,22 +12,26 @@ const passINFO = info => {
   document.getElementById("humidityText").innerHTML = info.humidity + "%";
   document.getElementById("windText").innerHTML = info.wind + "mph";
   imgController(info.weatherDescription);
+
+  // data is converted to celcius on call. checks on new call for Farenheit button selected.
+  // If true, swaps displayed temp type.
   if (selectedTemp === "F") {
     changeDegree();
   }
 };
 
+// adjusts weather icon and image background based on the text in the weather description
 const imgController = status => {
   const icon = document.getElementById("weatherGraphic");
   const bodyBG = document.body;
 
   if (status.indexOf("clear") >= 0 || status.indexOf("Clear") >= 0) {
-    icon.src = "http://openweathermap.org/img/wn/01d@2x.png";
+    icon.src = "https://openweathermap.org/img/wn/01d@2x.png";
     bodyBG.style.backgroundImage = "url(./images/sunBG.jpg)";
   }
 
   if (status.indexOf("cloud") >= 0 || status.indexOf("Cloud") >= 0) {
-    icon.src = "http://openweathermap.org/img/wn/04d@2x.png";
+    icon.src = "https://openweathermap.org/img/wn/04d@2x.png";
     if (status.indexOf("overcast") >= 0) {
       bodyBG.style.backgroundImage = "url(./images/overcastBG.jpeg)";
     } else {
@@ -36,21 +41,18 @@ const imgController = status => {
 
   if (status.indexOf("rain") >= 0 || status.indexOf("Rain") >= 0) {
     if (status.indexOf("thunder") >= 0 || status.indexOf("Thunder") >= 0) {
-      icon.src = "http://openweathermap.org/img/wn/11n@2x.png";
+      icon.src = "https://openweathermap.org/img/wn/11n@2x.png";
       bodyBG.style.backgroundImage = "url(./images/stormBG.jpeg)";
     } else {
-      icon.src = "http://openweathermap.org/img/wn/10n@2x.png";
+      icon.src = "https://openweathermap.org/img/wn/10n@2x.png";
       bodyBG.style.backgroundImage = "url(./images/rainBG.jpeg)";
     }
   }
 
   if (status.indexOf("snow") >= 0 || status.indexOf("Snow") >= 0) {
-    icon.src = "http://openweathermap.org/img/wn/13d@2x.png";
+    icon.src = "https://openweathermap.org/img/wn/13d@2x.png";
     bodyBG.style.backgroundImage = "url(./images/snowBG.jpg)";
   }
-
-  bodyBG.style.backgroundSize = "cover";
-  bodyBG.style.backgroundRepeat = "no-repeat";
 };
 
 export { passINFO };
